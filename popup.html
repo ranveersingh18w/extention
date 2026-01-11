@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    
+    .header {
+      background: #1a1a1a;
+      padding: 10px;
+      border-bottom: 2px solid #00ff00;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 15px;
+      color: #00ff00;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .content {
+      padding: 12px;
+    }
+    
+    .section {
+      margin-bottom: 12px;
+    }
+    
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #00ff00;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: 6px 8px;
+      background: #2a2a2a;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    .radio-option:hover {
+      background: #333;
+      border-color: #00ff00;
+    }
+    
+    .radio-option.selected {
+      background: #2a4a2a;
+      border-color: #00ff00;
+    }
+    
+    .radio-option input[type="radio"] {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      cursor: pointer;
+      accent-color: #00ff00;
+    }
+    
+    .radio-option label {
+      font-size: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      flex: 1;
+    }
+    
+    .activation-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .activation-group .radio-option {
+      grid-column: span 2;
+    }
+    
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    
+    button {
+      padding: 8px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    
+    button:hover {
+      transform: translateY(-1px);
+    }
+    
+    #saveSettingsBtn {
+      background: #00ff00;
+      color: #1a1a1a;
+    }
+    
+    #startBtn {
+      background: #2a4a2a;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+    }
+    
+    #startBtn:hover {
+      background: #00ff00;
+      color: #1a1a1a;
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .config-section {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .config-section input {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font-size: 10px;
+      box-sizing: border-box;
+      background: #2a2a2a;
+      color: #fff;
+      margin-top: 5px;
+    }
+    
+    .config-section input:focus {
+      outline: none;
+      border-color: #00ff00;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 9px;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+    
+    .status-badge.configured {
+      background: #2a4a2a;
+      color: #00ff00;
+    }
+    
+    .status-badge.missing {
+      background: #4a2a2a;
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>⚙️ MCQ AI</h1>
+  </div>
+  
+  <div class="content">
+    <div class="config-section">
+      <div class="section-title">
+        🔑 API Key
+        <span id="apiStatus" class="status-badge missing">Not Set</span>
+      </div>
+      <input type="password" id="apiKeyInput" placeholder="Enter Gemini API Key">
+      <a href="https://aistudio.google.com/apikey" target="_blank" style="font-size: 9px; color: #00ff00; text-decoration: none; display: block; margin-top: 3px;">Get API Key →</a>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">📷 Capture</div>
+      <div class="radio-group">
+        <div class="radio-option" id="snippetOption">
+          <input type="radio" name="captureMode" id="snippetRadio" value="snippet" checked>
+          <label for="snippetRadio">Snippet</label>
+        </div>
+        <div class="radio-option selected" id="fullscreenOption">
+          <input type="radio" name="captureMode" id="fullscreenRadio" value="fullscreen">
+          <label for="fullscreenRadio">Full Screen</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">⚡ Activation</div>
+      <div class="activation-group">
+        <div class="radio-option selected" id="tripleClickOption">
+          <input type="radio" name="activationMode" id="tripleClickRadio" value="tripleclick" checked>
+          <label for="tripleClickRadio">Triple Click</label>
+        </div>
+        <div class="radio-option" id="ctrlShiftAOption">
+          <input type="radio" name="activationMode" id="ctrlShiftARadio" value="ctrlshifta">
+          <label for="ctrlShiftARadio">Ctrl+Shift+A</label>
+        </div>
+        <div class="radio-option" id="manualOption">
+          <input type="radio" name="activationMode" id="manualRadio" value="manual">
+          <label for="manualRadio">Manual</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="button-row">
+      <button id="saveSettingsBtn">
+        <span>💾</span>Save
+      </button>
+      
+      <button id="startBtn">
+        <span>🚀</span>Start
+      </button>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
